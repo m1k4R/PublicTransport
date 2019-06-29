@@ -32,12 +32,20 @@ export class TimetableComponent implements OnInit, OnDestroy {
   busLocation: BusLocation;
   options = {
       suppressMarkers: true,
+      polylineOptions: { strokeColor: 'orange' }
   };
   icon = {
-    url: '../../../assets/busicon.png',
+    url: '../../../assets/bus.png',
     scaledSize: {
       width: 75,
       height: 75
+    }
+  };
+  iconbusstation = {
+    //url: '../../../assets/busstation.png',
+    scaledSize: {
+      width: 30,
+      height: 30
     }
   };
 
@@ -86,6 +94,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
     this.selectedLine = id;
     this.allStations = null;
     this.allStations = new Array<Station>();
+    this.hideDirections();
     this.showTimetable();
     this.initializeRoutes();
     this.startHttpRequest(id);

@@ -6,6 +6,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsModalService, BsModalRef  } from 'ngx-bootstrap/modal';
 import { LoginComponent } from '../user/login/login.component';
 import { RegisterComponent } from '../user/register/register.component';
+import { MyTicketComponent } from '../passenger/myTicket/myTicket.component';
 
 @Component({
   selector: 'app-navbar',
@@ -58,5 +59,9 @@ export class NavbarComponent implements OnInit {
 
   openModalRegister() {
     this.modalRef = this.modalService.show(RegisterComponent);
+  }
+
+  openModalMyTicket() {
+    this.modalRef = this.modalService.show(MyTicketComponent);
   }
 }

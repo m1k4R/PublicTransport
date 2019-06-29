@@ -26,6 +26,7 @@ export class NewStationComponent implements OnInit {
   latitude = 45.261705;
   longitude = 19.837223;
   locationChosen = false;
+  edit: boolean = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private alertify: AlertifyService,
               private adminService: AdminService, private router: ActivatedRoute, private route: Router) { }
@@ -42,6 +43,7 @@ export class NewStationComponent implements OnInit {
     if (id !== null) {
       this.adminService.getStation(+id).subscribe(next => {
         this.editStation = next as Station;
+        this.edit = true;
         this.editStation.stationLines.forEach(element => {
          this.newStationLines.push(element.line);
         });

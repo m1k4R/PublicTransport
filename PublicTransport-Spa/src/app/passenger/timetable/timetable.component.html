@@ -91,7 +91,7 @@
 
           <div *ngFor="let station of allStations" style="z-index: -1 !important; position: relative !important;">
             <agm-marker [latitude]="station.location.x" [longitude]="station.location.y" [title]="station.name"
-            [label]="station.name" style="z-index: 1 !important; position: relative !important;">
+            [label]="station.name" style="z-index: 1 !important; position: relative !important;" [iconUrl]="iconbusstation">
         
               <agm-info-window [latitude]="station.location.x" [longitude]="station.location.y" >
                 <span style="font-size: 16px;font-family:'Times New Roman'">{{station.name}}</span>

@@ -27,6 +27,7 @@ export class NewTimetableComponent implements OnInit {
   departures: Departures[] = new Array(24);
   departuresEdit: Departures[] = new Array(24);;
   isInitializedEdit: boolean = false;
+  edit: boolean = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private alertify: AlertifyService,
     private adminService: AdminService, private router: ActivatedRoute, private route: Router) { }
@@ -43,7 +44,7 @@ export class NewTimetableComponent implements OnInit {
     if (id !== null) {
       this.adminService.getTimetable(+id).subscribe(next => {
         this.editTimetable = next as TimeTable;
-
+        this.edit = true;
         this.type = this.editTimetable.type;
         this.line = this.editTimetable.line;
         this.day = this.editTimetable.day;

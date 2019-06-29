@@ -49,6 +49,7 @@ import { PriceListAdminResolver } from './_resolvers/priceListAdmin.resolver';
 import { TimetableListResolver } from './_resolvers/timetableList.resolver';
 import { AgmDirectionModule } from 'agm-direction';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { MyTicketComponent } from './passenger/myTicket/myTicket.component';
 
 export function getToken() {
   return localStorage.getItem('token');
@@ -75,7 +76,8 @@ export function getToken() {
       NewTimetableComponent,
       ViewTimetablesComponent,
       ViewPricelistComponent,
-      NewPricelistComponent
+      NewPricelistComponent,
+      MyTicketComponent
    ],
    imports: [
       BrowserModule,

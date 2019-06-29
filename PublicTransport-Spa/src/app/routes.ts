@@ -31,6 +31,7 @@ import { LineListResolver } from './_resolvers/lineList.resolver';
 import { BusListResolver } from './_resolvers/busList.resolver';
 import { PriceListAdminResolver } from './_resolvers/priceListAdmin.resolver';
 import { TimetableListResolver } from './_resolvers/timetableList.resolver';
+import { MyTicketComponent } from './passenger/myTicket/myTicket.component';
 
 
 export const appRoutes: Routes = [
@@ -63,5 +64,6 @@ export const appRoutes: Routes = [
     canActivate: [AdminGuard], resolve: {pricelists: PriceListAdminResolver}},
     {path: 'newPricelist', component: NewPricelistComponent, runGuardsAndResolvers: 'always',
     canActivate: [AdminGuard]},
+    {path: 'myTicket', component: MyTicketComponent, resolve: {user: UpdateUserResolver}},
     { path: '**', redirectTo: '', pathMatch: 'full'} // order is important and this need to be last
 ];

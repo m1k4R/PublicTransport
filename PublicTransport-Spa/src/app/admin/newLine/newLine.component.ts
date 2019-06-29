@@ -28,6 +28,7 @@ export class NewLineComponent implements OnInit {
   selectedStationToAdd: number;
   selectedBusToAdd: number;
   model: Bus = {} as Bus;
+  edit: boolean = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private alertify: AlertifyService,
               private adminService: AdminService, private router: ActivatedRoute, private route: Router) { }
@@ -45,6 +46,7 @@ export class NewLineComponent implements OnInit {
     if (id !== null) {
       this.adminService.getLine(+id).subscribe(next => {
         this.editLine = next as Line;
+        this.edit = true;
         this.editLine.stations.forEach(element => {
          this.newLineStations.push(element.station);
         });
