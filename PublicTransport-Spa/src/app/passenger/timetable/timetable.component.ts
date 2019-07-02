@@ -23,7 +23,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
   type: string;
   selectedLine: number;
   line: Line;
-  timetable= {} as TimeTable;
+  timetable = {} as TimeTable;
   isInitialized: boolean = false;
   departures: Departures[] = new Array(24);
   allDir: Directions[] = new Array<Directions>();
@@ -49,6 +49,13 @@ export class TimetableComponent implements OnInit, OnDestroy {
     }
   };
 
+  //move marker
+  numDeltas = 100;
+  delay = 10; //milliseconds
+  i = 0;
+  deltaLat: any;
+  deltaLng: any;
+
   constructor(private alertify: AlertifyService, private router: ActivatedRoute, private route: Router,
               public signalRService: SignalRService, private http: HttpClient) { }
 
@@ -62,13 +69,41 @@ export class TimetableComponent implements OnInit, OnDestroy {
           // console.log('linija: ' + this.selectedLine + 'dobijena linija: ' + locationData.lineId);
           if (locationData.lineId == this.selectedLine) {
             // console.log('Primljena linija je: ' + locationData.lineId);
-            this.busLocation = locationData;
+            if (this.busLocation === undefined) {
+              this.busLocation = locationData;
+              console.log("Prvi " + this.busLocation.x + " " + this.busLocation.y);
+            }
+            else
+            {
+              this.transition(locationData);
+            }
           }
         });
   });
 
     this.day = 'Working day';
     this.type = 'In City';
+  }
+
+  transition(result: BusLocation) {
+    console.log("Transition " + result.x + " " + result.y);
+    this.i = 0;
+    this.deltaLat = (result.x - this.busLocation.x)/this.numDeltas;
+    this.deltaLng = (result.y - this.busLocation.y)/this.numDeltas;
+    this.moveMarker();
+  }
+  
+  moveMarker() {
+    console.log("Dalje " + this.busLocation.x + " " + this.busLocation.y + " " + this.delay);
+    this.busLocation.x = this.busLocation.x + this.deltaLat;
+    this.busLocation.y = this.busLocation.y + this.deltaLng;
+    console.log("Saberi " + this.busLocation.x + " " + this.busLocation.y);
+    if (this.i != this.numDeltas) {
+      this.i++;
+      //setTimeout(this.moveMarker, this.delay);
+      this.moveMarker();
+      console.log("Zovi");
+    }
   }
 
   ngOnDestroy() {
