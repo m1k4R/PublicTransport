@@ -184,5 +184,19 @@ namespace PublicTransport.Api.Controllers
 
             return BadRequest("Could not add the photo!");
         }
+
+        [AllowAnonymous]
+        [HttpPost("addPaypal")]
+        public async Task<IActionResult> AddPaypal(Paypal paypal)
+        {
+            var result = await _publicTransportRepository.SavePaypalInfo(paypal);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Could not add the paypal!");
+        }
     }
 }

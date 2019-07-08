@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PublicTransport.Api.Data;
 using PublicTransport.Api.Helpers;
+using PublicTransport.Api.Models;
 
 namespace PublicTransport.Api.Controllers
 {
@@ -75,5 +76,6 @@ namespace PublicTransport.Api.Controllers
         {
             throw new NotImplementedException();
         }
+        
     }
 }

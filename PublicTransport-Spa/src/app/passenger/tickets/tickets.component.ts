@@ -4,6 +4,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { PricelistItem } from 'src/app/_models/pricelistItem';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
+import { Paypal } from 'src/app/_models/paypal';
 
 declare let paypal: any;
 
@@ -20,6 +21,8 @@ export class TicketsComponent implements OnInit {
   price: number = 1;
   re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   
+  paypalInfo = {} as Paypal;
+
   addScript: boolean = false;
   finalAmount: number = 1;
   paypalConfig = {
@@ -41,9 +44,25 @@ export class TicketsComponent implements OnInit {
     onAuthorize: (data, actions) => {
       return actions.payment.execute().then((payment) => {
         //Do something when payment is successful
+        //console.log(payment);
+        this.paypalInfo.cart = payment.cart;
+        this.paypalInfo.createTime = payment.create_time;
+        this.paypalInfo.paypalId = payment.id;
+        this.paypalInfo.email = payment.payer.payer_info.email;
+        this.paypalInfo.firstName = payment.payer.payer_info.first_name;
+        this.paypalInfo.lastName = payment.payer.payer_info.last_name;
+        this.paypalInfo.payerId = payment.payer.payer_info.payer_id;
+        this.paypalInfo.paymentMethod = payment.payer.payment_method;
+        this.paypalInfo.status = payment.payer.status;
+        this.paypalInfo.state = payment.state;
+        this.paypalInfo.currency = payment.transactions[0].amount.currency;
+        this.paypalInfo.total = payment.transactions[0].amount.total;
+        //console.log(this.paypalInfo);
+
         if (this.loggedIn()) {
           this.userService.buyTicketUser(this.ticketType, this.authService.decodedToken.nameid).subscribe(next => {
             this.alertify.success('Ticket bought');
+            this.userService.savePaypalInfo(this.paypalInfo);
           }, error => {
             this.alertify.error('Error while buying ticket');
           });
@@ -51,6 +70,7 @@ export class TicketsComponent implements OnInit {
           if (this.email !== null && this.re.test(this.email)) {
             this.userService.buyTicketAnonimus(this.ticketType, this.email).subscribe(next => {
               this.alertify.success('Ticket bought');
+              this.userService.savePaypalInfo(this.paypalInfo);
             }, error => {
               this.alertify.error('Error while buying ticket');
             });

@@ -21,6 +21,7 @@ namespace PublicTransport.Api.Data
         public DbSet<TimeTable> TimeTables { get; set; }
         public DbSet<PricelistItem> PricelistItems { get; set; }
         public DbSet<UserDiscount> UserDiscounts { get; set; }
+        public DbSet<Paypal> Paypals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

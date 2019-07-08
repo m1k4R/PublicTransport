@@ -194,7 +194,7 @@ namespace PublicTransport.Api.Data
             Add(timetable);
             if (await SaveAll())
             {
-                if (timetable.LineId == 0)
+                if (timetable.LineId == 0 || timetable.LineId == null)
                 {
                     var line = await _lineRepository.GetLine(lineId);
                     line.TimetableId = timetable.Id;
@@ -864,6 +864,13 @@ namespace PublicTransport.Api.Data
             {
                 return null;
             }
+        }
+
+        public async Task<bool> SavePaypalInfo(Paypal paypal)
+        {
+            _context.Paypals.Add(paypal);
+            
+            return await SaveAll();
         }
     }
 }

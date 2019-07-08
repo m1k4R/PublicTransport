@@ -8,6 +8,7 @@ import { PricelistItem } from '../_models/pricelistItem';
 import { UserRegister } from '../_models/userRegister';
 import { User } from '../_models/user';
 import { AllPricelists } from '../_models/allPricelists';
+import { Paypal } from '../_models/paypal';
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +55,10 @@ buyTicketUser(ticketType, userId) {
   params = params.append('type', ticketType);
   params = params.append('userId', userId);
   return this.http.put(this.baseUrl + 'user/buyTicket', params);
+}
+
+savePaypalInfo(paypal: Paypal) {
+  console.log("Save paypal info");
+  return this.http.post(this.baseUrl + 'user/addPaypal', paypal);
 }
 }

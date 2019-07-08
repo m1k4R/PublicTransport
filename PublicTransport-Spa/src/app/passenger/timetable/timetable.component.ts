@@ -71,7 +71,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
             // console.log('Primljena linija je: ' + locationData.lineId);
             if (this.busLocation === undefined) {
               this.busLocation = locationData;
-              console.log("Prvi " + this.busLocation.x + " " + this.busLocation.y);
+              //console.log("Prvi " + this.busLocation.x + " " + this.busLocation.y);
             }
             else
             {
@@ -86,7 +86,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
   }
 
   transition(result: BusLocation) {
-    console.log("Transition " + result.x + " " + result.y);
+    //console.log("Transition " + result.x + " " + result.y);
     this.i = 0;
     this.deltaLat = (result.x - this.busLocation.x)/this.numDeltas;
     this.deltaLng = (result.y - this.busLocation.y)/this.numDeltas;
@@ -94,15 +94,17 @@ export class TimetableComponent implements OnInit, OnDestroy {
   }
   
   moveMarker() {
-    console.log("Dalje " + this.busLocation.x + " " + this.busLocation.y + " " + this.delay);
+    //console.log("Dalje " + this.busLocation.x + " " + this.busLocation.y + " " + this.delay);
     this.busLocation.x = this.busLocation.x + this.deltaLat;
     this.busLocation.y = this.busLocation.y + this.deltaLng;
-    console.log("Saberi " + this.busLocation.x + " " + this.busLocation.y);
+    //console.log("Saberi " + this.busLocation.x + " " + this.busLocation.y);
     if (this.i != this.numDeltas) {
       this.i++;
       //setTimeout(this.moveMarker, this.delay);
-      this.moveMarker();
-      console.log("Zovi");
+      setTimeout(() => {
+        this.moveMarker();
+      }, this.delay);
+      //console.log("Zovi");
     }
   }
 
