@@ -62,7 +62,11 @@ export class TicketsComponent implements OnInit {
         if (this.loggedIn()) {
           this.userService.buyTicketUser(this.ticketType, this.authService.decodedToken.nameid).subscribe(next => {
             this.alertify.success('Ticket bought');
-            this.userService.savePaypalInfo(this.paypalInfo);
+            this.userService.savePaypalInfo(this.paypalInfo).subscribe(() => {
+              console.log('Ticket bought');
+            }, () => {
+              console.log('Ticket error');
+            });
           }, error => {
             this.alertify.error('Error while buying ticket');
           });
@@ -70,7 +74,11 @@ export class TicketsComponent implements OnInit {
           if (this.email !== null && this.re.test(this.email)) {
             this.userService.buyTicketAnonimus(this.ticketType, this.email).subscribe(next => {
               this.alertify.success('Ticket bought');
-              this.userService.savePaypalInfo(this.paypalInfo);
+              this.userService.savePaypalInfo(this.paypalInfo).subscribe(() => {
+                console.log('Ticket bought');
+              }, () => {
+                console.log('Ticket error');
+              });
             }, error => {
               this.alertify.error('Error while buying ticket');
             });

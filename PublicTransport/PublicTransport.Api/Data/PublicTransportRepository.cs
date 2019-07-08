@@ -375,7 +375,10 @@ namespace PublicTransport.Api.Data
 
                 foreach (var pricelistItem in pricelist)
                 {
-                    pricelistItem.Price = pricelistItem.Price - (pricelistItem.Price / (decimal)discount.Value);
+                    if(discount.Value != 0)
+                    {
+                        pricelistItem.Price = pricelistItem.Price - (pricelistItem.Price / (decimal)discount.Value);
+                    }
                 }
             }
 

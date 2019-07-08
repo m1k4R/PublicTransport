@@ -9,6 +9,7 @@ import { UserRegister } from '../_models/userRegister';
 import { User } from '../_models/user';
 import { AllPricelists } from '../_models/allPricelists';
 import { Paypal } from '../_models/paypal';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,13 @@ import { Paypal } from '../_models/paypal';
 export class UserService {
   baseUrl = environment.apiUrl;
 
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, private authService: AuthService) { }
 
 getTicketPrices(active: boolean = true): Observable<PricelistItem[]> {
   let params = new HttpParams();
+  if (this.authService.loggedIn()){
+    params = params.append('userId', this.authService.decodedToken.nameid);
+  }
   params = params.append('active', JSON.stringify(active));
   return this.http.get<PricelistItem[]>(this.baseUrl + 'publictransport/pricelists', {params});
 }
